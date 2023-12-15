@@ -51,12 +51,12 @@ int main(void)
     for (int i = 0; i < MAX_GUESS; i++)
     {
       // Debug Purpose Pls Ignore
-      // int debugResult[] = {3, 1, 1, 3, 1};
-      // printGuess(guesses[i].letter, debugResult);
+      int debugResult[] = {3, 1, 1, 3, 1};
+      printGuess(guesses[i].letter, debugResult);
       // End of Debug
 
 
-      printGuess(guesses[i].letter, guesses[i].result);
+      // printGuess(guesses[i].letter, guesses[i].result);
     }
     printf("------------------------------------------------------\n");
     printf("Guess a 5 letter word: ");
