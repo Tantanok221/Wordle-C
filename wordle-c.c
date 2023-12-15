@@ -13,7 +13,7 @@ typedef struct Guess
   // * 0 = not guessed, 1 = correct, 2 = incorrect. 3 = misplaced
 } Guess;
 void printEmpty(void);
-void printGuess(char *letter, int *result, int try);
+void printGuess(char *letter, int *result);
 char *generateAnswer(void);
 int CheckGuess(char guess, char *answer);
 char *toUpper(char *letter, int length);
@@ -26,10 +26,9 @@ int main(void)
 {
   Guess guesses[MAX_LETTERS];
   // For Debug/Init Use
-  char emptyGuess[] = "A    ";
+  char emptyGuess[] = "     ";
   int emptyResult[] = {0, 0, 0, 0, 0};
-  int debugResult[] = {3, 1, 1, 3, 1};
-  strcpy(guesses[0].letter, "hello");
+  
 
   // Generate answer
   char *answer = generateAnswer();
@@ -51,7 +50,13 @@ int main(void)
     printf("|Red = \033[1;31mIncorrect\033[1;0m Green = \033[1;32mCorrect\033[1;0m Yellow = \033[1;33mMisplaced\033[1;0m  |\n");
     for (int i = 0; i < MAX_GUESS; i++)
     {
-      printGuess(guesses[i].letter, debugResult, i + 1);
+      // Debug Purpose Pls Ignore
+      // int debugResult[] = {3, 1, 1, 3, 1};
+      // printGuess(guesses[i].letter, debugResult);
+      // End of Debug
+
+
+      printGuess(guesses[i].letter, guesses[i].result);
     }
     printf("------------------------------------------------------\n");
     printf("Guess a 5 letter word: ");
@@ -70,11 +75,17 @@ int main(void)
         capGuess[i] = currentGuess[i];
       }
     }
-    // for (int i = 0; i < MAX_LETTERS; i++)
-    // {
-    //   guesses[globalIterate].result[i] = CheckGuess(capGuess[i], answer);
-    // }
+    for (int i = 0; i < MAX_LETTERS; i++)
+    {
+      guesses[globalIterate].result[i] = CheckGuess(capGuess[i], answer);
+    }
+    
+
+    // printf("%s",pushArray);
     strcpy(guesses[globalIterate].letter, capGuess);
+    // 
+
+
     // Handle early win and exit
 
     globalIterate++;
@@ -85,7 +96,7 @@ int main(void)
   printf("|Red = \033[1;31mIncorrect\033[1;0m Green = \033[1;32mCorrect\033[1;0m Yellow = \033[1;33mMisplaced\033[1;0m  |\n");
   for (int i = 0; i < MAX_GUESS; i++)
   {
-    printGuess(guesses[i].letter, guesses[i].result, i + 1);
+    printGuess(guesses[i].letter, guesses[i].result);
   }
   printf("------------------------------------------------------\n");
   // Handle win lose condition
@@ -98,7 +109,7 @@ int main(void)
 int CheckGuess(char guess, char *answer)
 {
   // * return 0 = not guessed, 1 = correct, 2 = incorrect. 3 = misplaced
-  return 0;
+  return 1;
 }
 
 char *generateAnswer(void)
@@ -165,14 +176,13 @@ void printEmpty(void)
   printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 }
 
-void printGuess(char *letter, int *result, int try)
+void printGuess(char *letter, int *result)
 {
 
-  printf("|                     ");
-  for (int i = 1; i < MAX_LETTERS; i++)
+  printf("|                       ");
+  for (int i = 0; i < MAX_LETTERS; i++)
   {
     
-    // printf("%d",result[i]);
     if (result[i] == 1)
     { // Correct (Green)
       green();
@@ -196,7 +206,7 @@ void printGuess(char *letter, int *result, int try)
       printf("%c", letter[i]);
     }
   }
-  printf("                   |\n");
+  printf("                        |\n");
 }
 void red () {
   printf("\033[1;31m");
